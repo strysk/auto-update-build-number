@@ -9,11 +9,10 @@ jobs:
   update-build-number:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if:
+    if: ((github.event.pull_request.merged == true) && contains(github.event.pull_request.labels.*.name, 'bump up'))
     steps:
       - name: echo event info
         run: |
-          echo ${{ github.event.label }}
-          echo ${{ github.event.pull_request.labels.*.name[0] }}
+          echo executed
 
 
