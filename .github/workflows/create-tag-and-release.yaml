@@ -26,7 +26,8 @@ jobs:
         run: |
           dart pub global activate cider
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          echo "APP_VERSION=${cider version}" >> $GITHUB_ENV
+          APP_VERSION=$(cider version)
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
       - name: create tag & release
         run: |
