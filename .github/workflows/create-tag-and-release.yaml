@@ -35,6 +35,8 @@ jobs:
           git tag $APP_VERSION
           git push origin $APP_VERSION
           gh release create $APP_VERSION
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       
 
 
