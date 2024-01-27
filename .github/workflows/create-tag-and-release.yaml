@@ -1,0 +1,19 @@
+name: create-tag-and-release
+
+on:
+  push:
+    branches:
+      - main
+      - test
+
+jobs:
+  update-build-number:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event.label.name == "bump up"
+    steps:
+      - name: echo event info
+        run: echo github.event.label
+
+
+
