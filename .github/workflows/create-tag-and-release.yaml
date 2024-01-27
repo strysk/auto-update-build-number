@@ -22,11 +22,19 @@ jobs:
           brew install fvm
           fvm install
 
-      - name: create release
+      - name: echo version
         run: |
           dart pub global activate cider
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          cider release
+          echo "APP_VERSION=${cider version}" >> $GITHUB_ENV
+
+      - name: create tag & release
+        run: |
+          echo $APP_VERSION
+          git tag $APP_VERSION
+          git push origin $APP_VERSION
+          gh release create $APP_VERSION
+      
 
 
 
