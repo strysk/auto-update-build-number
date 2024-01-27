@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: echo event info
         run: |
-          echo github.event.label
-          echo github.event.pull_request.labels
+          echo ${{ github.event.label }}
+          echo ${{ github.event.pull_request.labels }}
 
 
