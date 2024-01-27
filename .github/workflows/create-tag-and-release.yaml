@@ -1,0 +1,39 @@
+name: create-tag-and-release
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  create-tag-and-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: ((github.event.pull_request.merged == true) && contains(github.event.pull_request.labels.*.name, 'bump up'))
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set homebrew path
+        run: echo "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
+
+      - name: set up fvm
+        run: |
+          brew tap leoafarias/fvm
+          brew install fvm
+          fvm install
+
+      - name: echo version
+        run: |
+          dart pub global activate cider
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          APP_VERSION=$(cider version)
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+
+      - name: create tag & release
+        run: |
+          echo $APP_VERSION
+          git tag $APP_VERSION
+          git push origin $APP_VERSION
+          gh release create $APP_VERSION
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
