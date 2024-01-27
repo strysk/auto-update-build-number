@@ -6,7 +6,7 @@ on:
       - closed
 
 jobs:
-  update-build-number:
+  create-tag-and-release:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: ((github.event.pull_request.merged == true) && contains(github.event.pull_request.labels.*.name, 'bump up'))
