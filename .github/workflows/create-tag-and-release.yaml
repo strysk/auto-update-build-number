@@ -34,6 +34,6 @@ jobs:
           echo $APP_VERSION
           git tag $APP_VERSION
           git push origin $APP_VERSION
-          gh release create $APP_VERSION
+          gh release create $APP_VERSION --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
