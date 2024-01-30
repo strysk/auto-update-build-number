@@ -1,0 +1,14 @@
+name: test-triggered-by-tag-push
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  test-triggered-by-tag-push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: test
+        run: echo "triggered by tag push"
